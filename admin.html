@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ระบบจัดการคำสั่งซื้อ | Tang Butcher Admin</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Navigation Bar */
+    .header-nav {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border-color);
+      background-color: var(--bg-primary);
+    }
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand-logo {
+      font-family: var(--font-serif-en);
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--text-main);
+      text-transform: uppercase;
+    }
+    .admin-badge {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.75rem;
+      border: 1px solid var(--accent-gold);
+      color: var(--accent-gold);
+    }
+
+    /* Admin Table Styling */
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      margin-top: var(--spacing-md);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+    th {
+      font-family: var(--font-sans);
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-main);
+      background-color: var(--bg-secondary);
+      padding: 1rem 1.2rem;
+      border-bottom: 1px solid var(--border-color);
+      white-space: nowrap;
+    }
+    td {
+      padding: 1rem 1.2rem;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-muted);
+      vertical-align: top;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    tr:hover td {
+      background-color: var(--bg-primary);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: var(--spacing-lg) 0;
+      text-align: center;
+      background-color: var(--bg-secondary);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: var(--spacing-xl);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="header-nav">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">Tang Butcher</a>
+      <span class="admin-badge">Admin System</span>
+    </div>
+  </header>
+
+  <!-- Admin Main Section -->
+  <main class="section">
+    <div class="container">
+      <div class="section-header">
+        <h1>รายการคำสั่งซื้อทั้งหมด</h1>
+        <p>แสดงรายการสั่งซื้อล่าสุดที่บันทึกผ่านระบบ (อัปเดตอัตโนมัติจาก Google Sheets)</p>
+      </div>
+
+      <div class="table-wrapper">
+        <!-- Table ID & tbody ตรงตามที่ script.js เรียกใช้เป๊ะๆ -->
+        <table id="ordersTable">
+          <thead>
+            <tr>
+              <th>วันเวลา</th>
+              <th>ชื่อลูกค้า</th>
+              <th>เบอร์โทร/Line</th>
+              <th>รายการสินค้า</th>
+              <th>จำนวนเงินรวม</th>
+              <th>หมายเหตุ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- script.js จะดึงข้อมูลจาก CSV มาเติมตรงนี้ -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Tang Butcher Admin Panel. Internal Use Only.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>รายการสินค้าทั้งหมด | Tang Butcher</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Header Navigation */
+    .header-nav {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border-color);
+      background-color: var(--bg-primary);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand-logo {
+      font-family: var(--font-serif-en);
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--text-main);
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .nav-links a:hover {
+      color: var(--accent-gold);
+    }
+
+    /* Filter Bar Component */
+    .filter-bar {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: var(--spacing-lg);
+    }
+    .filter-btn {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 0.6rem 1.4rem;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+    .filter-btn:hover,
+    .filter-btn.active {
+      border-color: var(--accent-gold);
+      color: var(--text-main);
+      background-color: var(--bg-card);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: var(--spacing-lg) 0;
+      text-align: center;
+      background-color: var(--bg-secondary);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: var(--spacing-xl);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="header-nav">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">Tang Butcher</a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">หน้าแรก</a></li>
+          <li><a href="product.html" style="color: var(--accent-gold);">สินค้าทั้งหมด</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Product Section -->
+  <main class="section">
+    <div class="container">
+      
+      <!-- Section Header -->
+      <div class="section-header">
+        <h1>สินค้าทั้งหมด</h1>
+        <p>ไส้กรอกทำมือสไตล์พรีเมียม คัดสรรวัตถุดิบสดใหม่เพื่อรสชาติที่สมบูรณ์แบบ</p>
+      </div>
+
+      <!-- Filter Bar (ตรงตาม ID ที่ script.js เรียกใช้) -->
+      <div id="filter-bar" class="filter-bar">
+        <button class="filter-btn active" data-type="all">ทั้งหมด</button>
+        <button class="filter-btn" data-type="chicken">ไก่งวง</button>
+        <button class="filter-btn" data-type="pork">หมูพริกไทยดำ</button>
+        <button class="filter-btn" data-type="beef">เนื้อวัว</button>
+        <button class="filter-btn" data-type="duck">เป็ด</button>
+        <button class="filter-btn" data-type="cheese">ชีส</button>
+      </div>
+
+      <!-- Product List Container (ตรงตาม ID ที่ script.js เรียกใช้) -->
+      <div id="product-list" class="product-grid">
+        <!-- Render โดย script.js จาก products.json -->
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Tang Butcher. Premium Handcrafted Sausages. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Script File -->
+  <script src="script.js"></script>
+</body>
+</html>

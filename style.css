@@ -1,0 +1,314 @@
+/* ==========================================================================
+   Tang Butcher - Premium Landing Page Stylesheet
+   ========================================================================== */
+
+/* 1. Imports & CSS Variables */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Serif+Thai:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  /* Color Palette - Premium Warm Neutral */
+  --bg-primary: #FDFBF7;        /* สีครีมอ่อน สบายตา */
+  --bg-secondary: #F5F0EB;      /* สีครีมอุ่น สำหรับส่วนสลับชั้น */
+  --bg-card: #FFFFFF;           /* สีขาวบริสุทธิ์การ์ด */
+  
+  --text-main: #2C221E;         /* สีน้ำตาลเข้มเกือบดำ สำหรับข้อความหลัก */
+  --text-muted: #6E6259;        /* สีน้ำตาลเทา สำหรับข้อความรอง */
+  --text-light: #A3968C;        /* สีน้ำตาลอ่อน สำหรับคำบรรยายเล็ก */
+
+  --accent-gold: #C5A059;       /* สีทองบรอนซ์เน้นความหรูหรา */
+  --accent-gold-hover: #A8833D; /* สีทองเข้มเมื่อ hover */
+  --border-color: #E6DFD5;      /* เส้นขอบสีน้ำตาลครีมบางนุ่มตา */
+  --border-dark: #2C221E;       /* เส้นขอบสีเข้มสำหรับปุ่มประณีต */
+
+  /* Type Accent Colors (สัมผัสเบาๆ แค่จุดเล็ก/เส้นใต้อักษร) */
+  --accent-fresh: #A3D9A5;      /* Fresh (ไก่) - เขียวมิ้นต์อ่อน */
+  --accent-relax: #D1C4E9;      /* Relax (หมู) - ม่วงลาเวนเดอร์อ่อน */
+  --accent-focus: #B0BEC5;      /* Focus (เนื้อ) - ฟ้าเทาอ่อน */
+  --accent-romance: #F8BBD0;    /* Romance (เป็ด/ชีส) - ชมพูพีชอ่อน */
+
+  /* Typography */
+  --font-serif-en: 'Cormorant Garamond', Georgia, serif;
+  --font-serif-th: 'Noto Serif Thai', serif;
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+
+  /* Spacing System (เว้นระยะโปร่งสบาย) */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 2rem;
+  --spacing-lg: 4rem;
+  --spacing-xl: 7rem;
+
+  /* Layout */
+  --max-width: 1200px;
+  --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 2. Base & Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  font-family: var(--font-serif-th), var(--font-sans);
+  font-weight: 400;
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 3. Typography */
+h1, h2, h3, h4, .brand-title {
+  font-family: var(--font-serif-en), var(--font-serif-th);
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1.3;
+  letter-spacing: 0.04em;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 5vw, 4.2rem);
+}
+
+h2 {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+}
+
+h3 {
+  font-size: clamp(1.3rem, 2vw, 1.8rem);
+}
+
+p {
+  color: var(--text-muted);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition-smooth);
+}
+
+/* 4. Layout & Spacing */
+.container {
+  width: 90%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-sm);
+}
+
+.section {
+  padding: var(--spacing-xl) 0;
+}
+
+.section-header {
+  text-align: center;
+  max-width: 650px;
+  margin: 0 auto var(--spacing-lg);
+  position: relative;
+}
+
+/* เส้นตกแต่งสีทองใต้หัวข้อ */
+.section-header::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 1px;
+  background-color: var(--accent-gold);
+  margin: var(--spacing-sm) auto 0;
+}
+
+/* 5. Buttons & Elements (เน้นเส้นบาง เรียบหรู) */
+.btn {
+  display: inline-block;
+  padding: 0.9rem 2.2rem;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border: 1px solid var(--border-dark);
+  background: transparent;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  position: relative;
+}
+
+.btn:hover {
+  background-color: var(--text-main);
+  color: var(--bg-primary);
+}
+
+.btn-accent {
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+}
+
+.btn-accent:hover {
+  background-color: var(--accent-gold);
+  color: #FFFFFF;
+}
+
+/* 6. Product Card Component */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.product-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  padding: var(--spacing-md);
+  transition: var(--transition-smooth);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.product-card:hover {
+  border-color: var(--accent-gold);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(44, 34, 30, 0.04);
+}
+
+/* กรอบรูปภาพสินค้า */
+.product-image-wrapper {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background-color: var(--bg-secondary);
+  margin-bottom: var(--spacing-sm);
+  position: relative;
+}
+
+.product-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition-smooth);
+}
+
+.product-card:hover .product-image-wrapper img {
+  transform: scale(1.04);
+}
+
+/* ข้อมูลสินค้า */
+.product-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.product-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--spacing-xs);
+}
+
+.product-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.product-price {
+  font-family: var(--font-serif-en);
+  font-size: 1.2rem;
+  color: var(--accent-gold);
+  font-weight: 700;
+}
+
+.product-meta {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  margin-bottom: var(--spacing-xs);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.product-desc {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: var(--spacing-md);
+  flex-grow: 1;
+}
+
+/* 7. Type Accent Dot & Subtle Tags (จุดสีแตะเบาๆ) */
+.type-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.product-card[data-type="chicken"] .type-dot,
+.accent-fresh {
+  background-color: var(--accent-fresh);
+}
+
+.product-card[data-type="pork"] .type-dot,
+.accent-relax {
+  background-color: var(--accent-relax);
+}
+
+.product-card[data-type="beef"] .type-dot,
+.accent-focus {
+  background-color: var(--accent-focus);
+}
+
+.product-card[data-type="duck"] .type-dot,
+.product-card[data-type="cheese"] .type-dot,
+.accent-romance {
+  background-color: var(--accent-romance);
+}
+
+/* เส้นขีดเล็กๆ ด้านใต้การ์ดเมื่อ hover สำหรับแยกประเภท */
+.product-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  transition: var(--transition-smooth);
+}
+
+.product-card[data-type="chicken"]:hover::before { background-color: var(--accent-fresh); width: 100%; }
+.product-card[data-type="pork"]:hover::before { background-color: var(--accent-relax); width: 100%; }
+.product-card[data-type="beef"]:hover::before { background-color: var(--accent-focus); width: 100%; }
+.product-card[data-type="duck"]:hover::before,
+.product-card[data-type="cheese"]:hover::before { background-color: var(--accent-romance); width: 100%; }
+
+/* 8. Responsive Adjustments */
+@media (max-width: 768px) {
+  :root {
+    --spacing-lg: 2.5rem;
+    --spacing-xl: 4rem;
+  }
+
+  .container {
+    width: 92%;
+  }
+
+  .product-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
+}

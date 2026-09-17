@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ขอบคุณสำหรับการสั่งซื้อ | Tang Butcher</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Navigation Bar */
+    .header-nav {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border-color);
+      background-color: var(--bg-primary);
+    }
+    .nav-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .brand-logo {
+      font-family: var(--font-serif-en);
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--text-main);
+      text-transform: uppercase;
+    }
+
+    /* Thank You Section */
+    .thankyou-wrapper {
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: var(--spacing-xl) var(--spacing-sm);
+    }
+    .thankyou-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: var(--spacing-xl) var(--spacing-lg);
+      max-width: 550px;
+      width: 100%;
+    }
+    .thankyou-icon {
+      font-size: 2rem;
+      color: var(--accent-gold);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: var(--spacing-lg) 0;
+      text-align: center;
+      background-color: var(--bg-secondary);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="header-nav">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">Tang Butcher</a>
+    </div>
+  </header>
+
+  <!-- Thank You Content -->
+  <main class="thankyou-wrapper">
+    <div class="container" style="display: flex; justify-content: center;">
+      <div class="thankyou-card">
+        <div class="thankyou-icon">✦</div>
+        <h1 style="margin-bottom: var(--spacing-xs);">ขอบคุณสำหรับการสั่งซื้อ</h1>
+        <p class="hero-subtitle" style="margin-bottom: var(--spacing-md);">Tang Butcher Handcrafted Sausages</p>
+        <p style="margin-bottom: var(--spacing-lg);">
+          เราได้รับข้อมูลการสั่งซื้อของคุณเรียบร้อยแล้ว<br>
+          ทางทีมงานจะรีบจัดเตรียมไส้กรอกสดใหม่และติดต่อกลับเพื่อยืนยันการจัดส่งโดยเร็วที่สุด
+        </p>
+        <a href="index.html" class="btn btn-accent">กลับสู่หน้าแรก</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Tang Butcher. Premium Handcrafted Sausages. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

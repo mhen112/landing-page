@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>สั่งซื้อสินค้า | Tang Butcher</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Navigation Bar */
+    .header-nav {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border-color);
+      background-color: var(--bg-primary);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand-logo {
+      font-family: var(--font-serif-en);
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--text-main);
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .nav-links a:hover {
+      color: var(--accent-gold);
+    }
+
+    /* Form Container Styles */
+    .order-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: var(--spacing-lg) var(--spacing-md);
+    }
+    .form-group {
+      margin-bottom: var(--spacing-md);
+    }
+    .form-group label {
+      display: block;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    .form-control {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      font-family: var(--font-serif-th), var(--font-sans);
+      font-size: 0.95rem;
+      color: var(--text-main);
+      background-color: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      transition: var(--transition-smooth);
+      outline: none;
+    }
+    .form-control:focus {
+      border-color: var(--accent-gold);
+      background-color: #FFFFFF;
+    }
+    .form-control[readonly] {
+      background-color: var(--bg-secondary);
+      color: var(--text-muted);
+      cursor: not-allowed;
+    }
+    textarea.form-control {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: var(--spacing-lg) 0;
+      text-align: center;
+      background-color: var(--bg-secondary);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: var(--spacing-xl);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="header-nav">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">Tang Butcher</a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">หน้าแรก</a></li>
+          <li><a href="product.html">สินค้าทั้งหมด</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Order Section -->
+  <main class="section">
+    <div class="container">
+      <div class="section-header">
+        <h1>ยืนยันการสั่งซื้อ</h1>
+        <p>กรุณากรอกข้อมูลสำหรับการจัดส่ง ไส้กรอกทำมือคุณภาพพรีเมียมจากเรา</p>
+      </div>
+
+      <div class="order-container">
+        <!-- Form ID & Input IDs ตรงตามที่ script.js เรียกใช้เป๊ะๆ -->
+        <form id="orderForm">
+          
+          <div class="form-group">
+            <label for="items">รายการสินค้าที่เลือก</label>
+            <input type="text" id="items" class="form-control" readonly required>
+          </div>
+
+          <div class="form-group">
+            <label for="total">จำนวนเงินรวม (บาท)</label>
+            <input type="text" id="total" class="form-control" readonly required>
+          </div>
+
+          <div class="form-group">
+            <label for="customerName">ชื่อ-นามสกุล ผู้รับ *</label>
+            <input type="text" id="customerName" class="form-control" placeholder="เช่น คุณสมชาย ใจดี" required>
+          </div>
+
+          <div class="form-group">
+            <label for="contact">เบอร์โทรศัพท์ / LINE ID *</label>
+            <input type="text" id="contact" class="form-control" placeholder="เช่น 081-234-5678 หรือ @line_id" required>
+          </div>
+
+          <div class="form-group">
+            <label for="note">หมายเหตุเพิ่มเติม / ที่อยู่จัดส่ง</label>
+            <textarea id="note" class="form-control" placeholder="ระบุรายละเอียดที่อยู่สำหรับจัดส่ง หรือข้อความเพิ่มเติมถึงเรา..."></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-accent" style="width: 100%; margin-top: var(--spacing-sm);">ยืนยันสั่งซื้อ</button>
+
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Tang Butcher. Premium Handcrafted Sausages. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tang Butcher | ไส้กรอกทำมือพรีเมียม</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* สไตล์เพิ่มเติมเฉพาะส่วน Header/Hero และ Category Section ให้สอดคล้องกับธีมหลัก */
+    .header-nav {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border-color);
+      background-color: var(--bg-primary);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand-logo {
+      font-family: var(--font-serif-en);
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--text-main);
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .nav-links a:hover {
+      color: var(--accent-gold);
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: calc(100vh - 80px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+      padding: var(--spacing-xl) var(--spacing-sm);
+      position: relative;
+    }
+    .hero-subtitle {
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: var(--spacing-sm);
+    }
+    .hero-title {
+      max-width: 800px;
+      margin: 0 auto var(--spacing-md);
+      font-weight: 600;
+      line-height: 1.4;
+    }
+    .hero-description {
+      max-width: 550px;
+      margin: 0 auto var(--spacing-lg);
+      font-size: 1.1rem;
+      color: var(--text-muted);
+    }
+
+    /* Category Cards Grid */
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--spacing-md);
+      margin-top: var(--spacing-md);
+    }
+    .category-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: var(--spacing-md) var(--spacing-sm);
+      text-align: center;
+      transition: var(--transition-smooth);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      position: relative;
+    }
+    .category-card:hover {
+      border-color: var(--accent-gold);
+      transform: translateY(-4px);
+    }
+    .category-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-bottom: var(--spacing-sm);
+    }
+    .category-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      color: var(--text-main);
+    }
+    .category-mood {
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-light);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: var(--spacing-lg) 0;
+      text-align: center;
+      background-color: var(--bg-secondary);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="header-nav">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">Tang Butcher</a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">หน้าแรก</a></li>
+          <li><a href="product.html">สินค้าทั้งหมด</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <p class="hero-subtitle">Handcrafted Artisanal Sausages</p>
+      <h1 class="hero-title">
+        อิ่มอร่อยแบบมีสไตล์<br>
+        ไส้กรอกทำมือจาก Tang Butcher
+      </h1>
+      <p class="hero-description">
+        ไส้กรอกแท้ ทำสด ทุกคำคือความตั้งใจ สัมผัสรสชาติอันพิถีพิถันจากวัตถุดิบเกรดพรีเมียม
+      </p>
+      <a href="product.html" class="btn btn-accent">ดูสินค้าทั้งหมด</a>
+    </div>
+  </section>
+
+  <!-- 5 Types / Mood Section -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>คอลเลกชันตามอารมณ์และรสสัมผัส</h2>
+        <p>คัดสรรประเภทไส้กรอกเพื่อตอบโจทย์ทุกความต้องการอย่างปราณีต</p>
+      </div>
+
+      <div class="category-grid">
+        <!-- Fresh (ไก่งวง) -->
+        <a href="product.html?mood=fresh" class="category-card">
+          <span class="category-dot accent-fresh"></span>
+          <h3 class="category-title">ไส้กรอกไก่งวง</h3>
+          <span class="category-mood">Fresh Collection</span>
+        </a>
+
+        <!-- Relax (หมู) -->
+        <a href="product.html?mood=relax" class="category-card">
+          <span class="category-dot accent-relax"></span>
+          <h3 class="category-title">ไส้กรอกหมูพริกไทยดำ</h3>
+          <span class="category-mood">Relax Collection</span>
+        </a>
+
+        <!-- Focus (เนื้อ) -->
+        <a href="product.html?mood=focus" class="category-card">
+          <span class="category-dot accent-focus"></span>
+          <h3 class="category-title">ไส้กรอกเนื้อ</h3>
+          <span class="category-mood">Focus Collection</span>
+        </a>
+
+        <!-- Romance (เป็ด) -->
+        <a href="product.html?mood=romance" class="category-card">
+          <span class="category-dot accent-romance"></span>
+          <h3 class="category-title">ไส้กรอกเป็ด</h3>
+          <span class="category-mood">Romance Collection</span>
+        </a>
+
+        <!-- Cheese -->
+        <a href="product.html?type=cheese" class="category-card">
+          <span class="category-dot accent-romance"></span>
+          <h3 class="category-title">ไส้กรอกชีส</h3>
+          <span class="category-mood">Delight Collection</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Tang Butcher. Premium Handcrafted Sausages. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
