@@ -3,15 +3,16 @@
    ========================================================================== */
 
 // --- Configuration Constants ---
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzXLidQND9M6bMI-IGzNR3RZdmtXkYazgoidJF04gnwKjmrG64TV_R8ICXb1cSLtzo_Jw/exec'; 
-const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6DR80iEtWRs2DN_mOuwmNNizaVESP5_y-emwbYQ7h0EdPhTQ7cI907hk_7q8IOO1x9SAx7q-BjO5d/pub?output=csv';
+// กรุณานำ URL จาก Google Apps Script และ Google Sheets CSV มาใส่ในตัวแปรด้านล่างนี้
+const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL_HERE'; 
+const CSV_URL = 'YOUR_GOOGLE_SHEETS_CSV_URL_HERE';
 
 // Mood to Type mapping (รองรับ parameter ?mood=xxx)
 const MOOD_MAP = {
   'fresh': 'chicken',
   'relax': 'pork',
   'focus': 'beef',
-  'romance': 'duck'
+  'romance': 'duck' // หรือ 'cheese'
 };
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -39,48 +40,34 @@ function initProductPage() {
   const filterBar = document.getElementById('filter-bar');
   let allProducts = [];
 
-  // โหลดข้อมูลสินค้า (ดึงจาก CSV Google Sheets ก่อน หากไม่ได้จึงสลับไปดึง products.json)
-  fetch(CSV_URL)
+  // โหลดข้อมูลจาก products.json
+  fetch('products.json')
     .then(response => {
-      if (!response.ok) throw new Error('ไม่สามารถดึงข้อมูล CSV ได้');
-      return response.text();
-    })
-    .then(csvText => {
-      const rows = parseCSV(csvText);
-      if (rows.length > 1) {
-        // โครงสร้างคอลัมน์ CSV: [0]ID/Timestamp, [1]Name, [2]Price, [3]Size, [4]Type, [5]Description, [6]Image
-        allProducts = rows.slice(1).map(row => ({
-          name: row[1] || row[0] || 'สินค้า',
-          price: row[2] || '0',
-          size: row[3] || '',
-          type: (row[4] || 'all').toLowerCase(),
-          description: row[5] || '',
-          image: convertDriveUrl(row[6] || '')
-        }));
-      }
-      return allProducts;
-    })
-    .catch(() => {
-      // กรณีดึงจาก CSV ไม่สำเร็จ ให้สลับมาโหลดจากไฟล์ products.json
-      return fetch('products.json').then(res => res.json());
+      if (!response.ok) throw new Error('ไม่สามารถโหลดข้อมูลสินค้าได้');
+      return response.json();
     })
     .then(products => {
-      allProducts = products || [];
+      allProducts = products;
       
+      // ตรวจสอบ URL parameter (?mood=xxx หรือ ?type=xxx)
       const urlParams = new URLSearchParams(window.location.search);
       const moodParam = urlParams.get('mood')?.toLowerCase();
       const typeParam = urlParams.get('type')?.toLowerCase();
 
       let initialType = 'all';
+
       if (typeParam) {
         initialType = typeParam;
       } else if (moodParam) {
+        // แปลงค่า mood เป็น type หรือถ้าตรงกับ type อยู่แล้วก็ใช้ค่านั้น
         initialType = MOOD_MAP[moodParam] || moodParam;
       }
 
+      // แสดงสินค้าตามเงื่อนไขเริ่มต้น
       filterAndRenderProducts(initialType, allProducts, productList);
       setActiveFilterButton(initialType);
 
+      // ตั้งค่า Event Listener ให้ปุ่มกรองสินค้า
       if (filterBar) {
         filterBar.addEventListener('click', (e) => {
           const btn = e.target.closest('[data-type]');
@@ -88,6 +75,7 @@ function initProductPage() {
 
           const selectedType = btn.getAttribute('data-type');
           
+          // อัปเดตการแสดงผลปุ่มที่ถูกเลือก
           filterBar.querySelectorAll('[data-type]').forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
 
@@ -97,22 +85,8 @@ function initProductPage() {
     })
     .catch(error => {
       console.error(error);
-      if (productList) {
-        productList.innerHTML = `<p class="error-msg" style="text-align: center; color: var(--text-muted); grid-column: 1/-1; padding: 2rem 0;">เกิดข้อผิดพลาดในการโหลดรายการสินค้า</p>`;
-      }
+      productList.innerHTML = `<p class="error-msg" style="text-align: center; color: var(--text-muted);">เกิดข้อผิดพลาดในการโหลดรายการสินค้า</p>`;
     });
-}
-
-// ฟังก์ชันแปลงลิงก์ Google Drive เป็น Direct Link รูปภาพ
-function convertDriveUrl(url) {
-  if (!url) return 'https://via.placeholder.com/400x400?text=Tang+Butcher';
-  if (url.includes('drive.google.com')) {
-    const match = url.match(/\/d\/([^\/\?]+)/);
-    if (match && match[1]) {
-      return `https://lh3.googleusercontent.com/d/${match[1]}`;
-    }
-  }
-  return url;
 }
 
 // ฟังก์ชันกรองและสร้างการ์ดสินค้า
@@ -121,13 +95,13 @@ function filterAndRenderProducts(type, products, container) {
     ? products 
     : products.filter(p => p.type === type);
 
-  if (!filtered || filtered.length === 0) {
+  if (filtered.length === 0) {
     container.innerHTML = `<p style="text-align: center; grid-column: 1/-1; color: var(--text-muted); padding: 3rem 0;">ไม่พบสินค้าในหมวดหมู่ที่เลือก</p>`;
     return;
   }
 
   container.innerHTML = filtered.map(product => {
-    const fullProductName = `${product.name} ${product.size || ''}`.trim();
+    const fullProductName = `${product.name} ${product.size}`;
     const orderUrl = `order.html?item=${encodeURIComponent(fullProductName)}&price=${encodeURIComponent(product.price)}`;
 
     return `
@@ -138,13 +112,13 @@ function filterAndRenderProducts(type, products, container) {
         <div class="product-info">
           <div class="product-meta">
             <span class="type-dot"></span>
-            <span>${product.size || ''}</span>
+            <span>${product.size}</span>
           </div>
           <div class="product-header">
             <h3 class="product-title">${product.name}</h3>
             <span class="product-price">฿${product.price}</span>
           </div>
-          <p class="product-desc">${product.description || ''}</p>
+          <p class="product-desc">${product.description}</p>
           <a href="${orderUrl}" class="btn btn-accent" style="margin-top: auto; text-align: center;">สั่งซื้อ</a>
         </div>
       </article>
@@ -167,17 +141,19 @@ function setActiveFilterButton(type) {
 }
 
 /* ==========================================================================
-   2. ORDER PAGE LOGIC (order.html) - ส่งข้อมูลสั่งซื้อเข้า Telegram
+   2. ORDER PAGE LOGIC (order.html)
    ========================================================================== */
 function initOrderPage() {
   const itemsInput = document.getElementById('items');
   const totalInput = document.getElementById('total');
   const orderForm = document.getElementById('orderForm');
 
+  // ดึงค่า item และ price จาก URL parameter
   const urlParams = new URLSearchParams(window.location.search);
   const itemParam = urlParams.get('item');
   const priceParam = urlParams.get('price');
 
+  // เติมค่าลงฟอร์มทันทีที่โหลดหน้า (เติมทั้งสองช่อง)
   if (itemsInput && itemParam) {
     itemsInput.value = itemParam;
   }
@@ -185,12 +161,12 @@ function initOrderPage() {
     totalInput.value = priceParam;
   }
 
+  // ส่งข้อมูลเมื่อกดยืนยันสั่งซื้อ
   if (orderForm) {
     orderForm.addEventListener('submit', (e) => {
       e.preventDefault();
 
       const payload = {
-        source: 'ONLINE', // ระบุแหล่งที่มาว่าเป็นออเดอร์ออนไลน์
         customerName: document.getElementById('customerName').value.trim(),
         contact: document.getElementById('contact').value.trim(),
         items: document.getElementById('items').value.trim(),
@@ -198,20 +174,14 @@ function initOrderPage() {
         note: document.getElementById('note').value.trim()
       };
 
-      // ส่งข้อมูลไปยัง Google Apps Script (ยิงส่งต่อเข้า Telegram และบันทึก Sheet อัตโนมัติ)
+      // ส่งข้อมูลด้วย pattern ที่กำหนดเป๊ะๆ
       fetch(APPS_SCRIPT_URL, {
         method: 'POST',
-        mode: 'no-cors', // สำคัญมาก! ป้องกันเบราว์เซอร์ติด CORS Block
-        headers: {
-          'Content-Type': 'text/plain'
-        },
         body: JSON.stringify(payload)
       })
-      .then(() => {
-        window.location.href = 'thankyou.html';
-      })
+      .then(() => { window.location.href = 'thankyou.html'; })
       .catch(error => {
-        console.error('Error submitting order:', error);
+        console.error(error);
         alert('เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง');
       });
     });
@@ -238,10 +208,15 @@ function initAdminPage() {
         return;
       }
 
+      // แยก Header และ Data
       const dataRows = parsedRows.slice(1);
+
+      // เรียงจากรายการล่าสุดขึ้นก่อน (ย้อนแถวอาศัยการ Append จากล่างขึ้นบนของ Apps Script)
       dataRows.reverse();
 
+      // แสดงผลลงตาราง
       tableBody.innerHTML = dataRows.map(row => {
+        // กำหนดความปลอดภัยป้องกัน undefined
         const timestamp = row[0] || '-';
         const name = row[1] || '-';
         const contact = row[2] || '-';
@@ -267,7 +242,7 @@ function initAdminPage() {
     });
 }
 
-// Custom CSV Parser
+// Custom CSV Parser (ไม่ใช้ External Library)
 function parseCSV(text) {
   const rows = [];
   let currentRow = [];
@@ -281,7 +256,7 @@ function parseCSV(text) {
     if (inQuotes) {
       if (char === '"' && nextChar === '"') {
         currentField += '"';
-        i++;
+        i++; // ข้ามเครื่องหมาย quote ถัดไป
       } else if (char === '"') {
         inQuotes = false;
       } else {
@@ -294,7 +269,7 @@ function parseCSV(text) {
         currentRow.push(currentField.trim());
         currentField = '';
       } else if (char === '\r') {
-        // skip
+        // ข้ามตัวอักษร Carriage Return
       } else if (char === '\n') {
         currentRow.push(currentField.trim());
         if (currentRow.some(field => field.length > 0)) {
@@ -308,6 +283,7 @@ function parseCSV(text) {
     }
   }
 
+  // จัดการฟิลด์สุดท้ายของไฟล์
   if (currentField.length > 0 || currentRow.length > 0) {
     currentRow.push(currentField.trim());
     if (currentRow.some(field => field.length > 0)) {
@@ -318,6 +294,7 @@ function parseCSV(text) {
   return rows;
 }
 
+// Utility ฟังก์ชันช่วยล้างอักขระพิเศษ ป้องกัน XSS
 function escapeHTML(str) {
   return String(str)
     .replace(/&/g, '&amp;')
