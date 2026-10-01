@@ -154,7 +154,7 @@ function initOrderPage() {
         note: document.getElementById('note')?.value.trim() || ''
       };
 
-     // 1. ส่งแจ้งเตือนเข้า Telegram
+      // 1. ส่งแจ้งเตือนเข้า Telegram
       const telegramMessage = [
         '🛒 <b>มีรายการสั่งซื้อใหม่จากลูกค้า!</b>',
         `- ชื่อลูกค้า: ${payload.customerName}`,
@@ -180,6 +180,8 @@ function initOrderPage() {
         console.error(error);
         alert('เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง');
       });
+    });
+  }
 }
 
 /* ==========================================================================
