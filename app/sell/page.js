@@ -13,7 +13,7 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Config missing' }, { status: 500 });
     }
 
-    // ครั้งที่ 1: ลองส่งแบบ HTML Formatting
+    // ครั้งที่ 1: ลองส่งแบบ HTML Formatting (ใช้ Backticks ` `)
     const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -29,9 +29,9 @@ export async function POST(request) {
     // ครั้งที่ 2 (Fallback): ถ้า Telegram ฟ้องว่า HTML มีปัญหา ให้ลบ HTML Tag ออกแล้วยิงใหม่ทันที
     if (!data.ok) {
       console.warn('Telegram HTML parse failed, retrying without HTML:', data.description);
-      
-      const plainTextMessage = message.replace(/<[^>]*>/g, ''); // ถอดแท็ก HTML ออก
-      
+
+      const plainTextMessage = (message || '').replace(/<[^>]*>/g, '');
+
       const retryRes = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
