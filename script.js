@@ -30,8 +30,8 @@ export default function SellPage() {
 
   // ฟังก์ชันส่งข้อความไปยัง Telegram API
   const sendTelegramNotification = async (messageText) => {
-    const botToken = process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN
-    const chatId = process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID
+    const botToken = bot8989595298:AAGChc38obda98T3oC0WQ-EL0ir_spVTbow
+    const chatId = @tangbucher
 
     if (!botToken || !chatId) {
       console.warn('ไม่พบค่า NEXT_PUBLIC_TELEGRAM_BOT_TOKEN หรือ NEXT_PUBLIC_TELEGRAM_CHAT_ID ใน Environment Variables')
