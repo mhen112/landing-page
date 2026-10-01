@@ -30,22 +30,36 @@ export default function SellPage() {
   }
 
   // -------------------------------------------------------------
-  // ฟังก์ชันยิงข้อความไปยัง Telegram ผ่าน API Route (/api/telegram)
+  // ฟังก์ชันยิงข้อความไปยัง Telegram API ตรงตามข้อกำหนด
   // -------------------------------------------------------------
   const sendTelegramMessage = async (messageText) => {
+    const TELEGRAM_BOT_TOKEN = process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN
+    const TELEGRAM_CHAT_ID = process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID
+
+    if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+      console.warn('Telegram Bot Token หรือ Chat ID ไม่ได้ถูกตั้งค่าใน Environment Variables')
+      return
+    }
+
     try {
-      await fetch('/api/telegram', {
+      await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: messageText }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          chat_id: TELEGRAM_CHAT_ID,
+          text: messageText,
+          parse_mode: 'HTML',
+        }),
       })
     } catch (error) {
-      // ดักจับ error ไม่ให้การยิง Telegram พังกระบวนการขาย
+      // ครอบ try-catch เพื่อไม่ให้กระทบกระบวนการขายหลัก หากการยิง Telegram มีปัญหา
       console.error('ไม่สามารถส่งข้อความไปยัง Telegram ได้:', error)
     }
   }
 
-  // ฟังก์ชันจัดการการขายสินค้า
+  // ฟังก์ชันจัดการการขายสินค้าและตัดสต๊อก
   const handleSell = async (e) => {
     e.preventDefault()
     if (!selectedProductId || quantity <= 0) return
@@ -89,8 +103,8 @@ export default function SellPage() {
             product_name: product.name,
             quantity: quantity,
             total_price: totalPrice,
-            created_at: new Date().toISOString()
-          }
+            created_at: new Date().toISOString(),
+          },
         ])
 
       if (salesError) throw salesError
@@ -98,27 +112,29 @@ export default function SellPage() {
       // -------------------------------------------------------------
       // 4. ส่งการแจ้งเตือนเข้า Telegram
       // -------------------------------------------------------------
-      const now = new Date().toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' })
+      const currentTime = new Date().toLocaleString('th-TH', {
+        timeZone: 'Asia/Bangkok',
+      })
 
-      // งานที่ 1: แจ้งเตือน Order เข้า
+      // งานที่ 1: แจ้งเตือน Order เข้า (New Order Alert)
       const orderMessage = [
-        '<b>🛍️ มีรายการขายใหม่!</b>',
-        `• สินค้า: <b>${product.name}</b>`,
-        `• จำนวน: ${quantity} ชิ้น`,
-        `• ราคารวม: ${totalPrice.toLocaleString()} บาท`,
-        `• สต๊อกคงเหลือปัจจุบัน: ${updatedStock} ชิ้น`,
-        `• เวลา: ${now}`
+        '🛍️ <b>มีรายการขายใหม่!</b>',
+        `- สินค้า: ${product.name}`,
+        `- จำนวน: ${quantity} ชิ้น`,
+        `- ราคารวม: ${totalPrice.toLocaleString()} บาท`,
+        `- สต๊อกคงเหลือปัจจุบัน: ${updatedStock} ชิ้น`,
+        `- เวลา: ${currentTime}`,
       ].join('\n')
 
       await sendTelegramMessage(orderMessage)
 
-      // งานที่ 2: แจ้งเตือน Stock เหลือน้อย (<= 5 ชิ้น)
+      // งานที่ 2: แจ้งเตือน Stock เหลือน้อย (Low Stock Alert <= 5)
       if (updatedStock <= 5) {
         const lowStockMessage = [
-          '<b>🚨 [เตือนภัย] สต๊อกสินค้าใกล้หมด!</b>',
-          `• สินค้า: <b>${product.name}</b>`,
-          `• คงเหลือเพียง: <b>${updatedStock}</b> ชิ้น`,
-          '⚠️ กรุณาเติมสต๊อกสินค้าด่วน!'
+          '🚨 <b>[เตือนภัย] สต๊อกสินค้าใกล้หมด!</b>',
+          `- สินค้า: ${product.name}`,
+          `- คงเหลือเพียง: ${updatedStock} ชิ้น`,
+          '⚠️ กรุณาเติมสต๊อกสินค้าด่วน!',
         ].join('\n')
 
         await sendTelegramMessage(lowStockMessage)
@@ -186,7 +202,7 @@ export default function SellPage() {
             color: 'white',
             border: 'none',
             borderRadius: '4px',
-            cursor: loading ? 'not-allowed' : 'pointer'
+            cursor: loading ? 'not-allowed' : 'pointer',
           }}
         >
           {loading ? 'กำลังบันทึก...' : 'กดขายสินค้า'}
