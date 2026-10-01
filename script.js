@@ -4,8 +4,8 @@
 
 // --- Configuration Constants ---
 // กรุณานำ URL จาก Google Apps Script และ Google Sheets CSV มาใส่ในตัวแปรด้านล่างนี้
-const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL_HERE'; 
-const CSV_URL = 'YOUR_GOOGLE_SHEETS_CSV_URL_HERE';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwFfFDg25jugVpQAea-IWKzNBxWupU05cP7SC1m8y9cozSZs_TOgfQEYAS4qvcsa4D14g/exec'; 
+const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ6DR80iEtWRs2DN_mOuwmNNizaVESP5_y-emwbYQ7h0EdPhTQ7cI907hk_7q8IOO1x9SAx7q-BjO5d/pub?output=csv';
 
 // Mood to Type mapping (รองรับ parameter ?mood=xxx)
 const MOOD_MAP = {
