@@ -154,6 +154,23 @@ function initOrderPage() {
         note: document.getElementById('note')?.value.trim() || ''
       };
 
+     // 1. ส่งแจ้งเตือนเข้า Telegram
+      const telegramMessage = [
+        '🛒 <b>มีรายการสั่งซื้อใหม่จากลูกค้า!</b>',
+        `- ชื่อลูกค้า: ${payload.customerName}`,
+        `- ติดต่อ: ${payload.contact}`,
+        `- สินค้า: ${payload.items}`,
+        `- ราคารวม: ${payload.total} บาท`,
+        `- หมายเหตุ: ${payload.note || '-'}`
+      ].join('\n');
+
+      fetch('/api/telegram', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: telegramMessage })
+      }).catch(err => console.error('Telegram Error:', err));
+
+      // 2. บันทึกลง Google Sheets และไปยังหน้าขอบคุณ
       fetch(APPS_SCRIPT_URL, {
         method: 'POST',
         body: JSON.stringify(payload)
@@ -162,6 +179,7 @@ function initOrderPage() {
       .catch(error => {
         console.error(error);
         alert('เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง');
+      });
       });
     });
   }
