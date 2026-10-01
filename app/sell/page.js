@@ -5,8 +5,8 @@ export async function POST(request) {
   try {
     const { message } = await request.json();
 
-    const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN;
-    const CHAT_ID = process.env.TELEGRAM_CHAT_ID || process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID;
+    const BOT_TOKEN =8989595298:AAGChc38obda98T3oC0WQ-EL0ir_spVTbow;
+    const CHAT_ID = @tangbucher;
 
     if (!BOT_TOKEN || !CHAT_ID) {
       console.error('Missing Telegram Config Environment Variables');
