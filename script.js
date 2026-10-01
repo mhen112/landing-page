@@ -180,8 +180,6 @@ function initOrderPage() {
         console.error(error);
         alert('เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง');
       });
-      });
-    });
   }
 }
 
